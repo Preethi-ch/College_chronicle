@@ -1,0 +1,414 @@
+/* OUTER BOX */
+.outer-box {
+  margin: 40px auto;
+  padding: 20px;
+  max-width: 1400px;
+  width: 90%;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ddd;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  overflow: hidden; /* ✅ Added for consistent layout handling */
+}
+
+/* LEFT CONTAINER (Dashboard & Feed) */
+.left-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* DASHBOARD SECTION */
+.dashboard-section {
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  min-height: 200px;
+  overflow: hidden;
+  transition: min-height 0.3s ease-in-out;
+}
+
+/* Expanding dashboard when subcategories appear */
+.dashboard-section.expanded {
+  min-height: 350px;
+}
+
+/* CATEGORY CONTAINER */
+.category-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* CATEGORY WRAPPER */
+.category-wrapper {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* CATEGORY ICON */
+.category-icon img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border: 2px solid #2980b9;
+  border-radius: 50%;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.category-icon:hover img {
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* SUBCATEGORY BOX */
+.sub-category-container {
+  position: relative;
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  min-width: 180px;
+  text-align: center;
+  border: 1px solid #ddd;
+  display: none;
+  margin-top: 10px;
+  z-index: 5; /* ✅ Added to avoid issues with overlapping content */
+}
+
+/* Show subcategory on hover */
+.category-wrapper:hover .sub-category-container {
+  display: block;
+}
+
+.category-wrapper:hover ~ .dashboard-section {
+  min-height: 350px;
+}
+
+/* SUBCATEGORY LIST */
+.sub-category-container ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sub-category-container li {
+  padding: 8px 12px;
+  background: #f4f4f4;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  white-space: nowrap;
+}
+
+.sub-category-container li:hover {
+  background: #e0e0e0;
+}
+
+.subcategory-link {
+  text-decoration: none;
+  color: #2980b9;
+  font-weight: bold;
+  display: block;
+}
+
+.subcategory-link:hover {
+  text-decoration: underline;
+}
+
+/* FEED SECTION */
+.feed-section {
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  position: relative; /* ✅ Added to allow positioning inside feed */
+}
+
+/* FEED HEADER (Aligning Feed Title & Filter Button Inline) */
+.feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.feed-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Filter Button */
+.filter-container {
+  position: relative;
+}
+
+.filter-button {
+  background-color: #43d2d2;
+  color: white;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  min-width: 100px;
+  z-index: 10;
+}
+
+.filter-button:hover {
+  background-color: #51bfcd;
+}
+
+/* Dropdown for Filter */
+.filter-dropdown {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+  z-index: 10;
+}
+
+.filter-dropdown button {
+  padding: 10px;
+  background: rgb(249, 248, 248);
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  font-size: 14px;
+  color:black;
+}
+
+.filter-dropdown button:hover {
+  background: #f0f0f0;
+}
+
+/* FEED GRID - 3 COLUMNS */
+.feed-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+/* FEED ITEM */
+.feed-item {
+  background: white;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.feed-item:hover {
+  transform: scale(1.05);
+}
+
+/* IMAGES INSIDE FEED */
+.feed-item img {
+  width: 100%;
+  height: 200px; /* Fixed height to prevent masonry effect */
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* REMOVE MASONRY EFFECT */
+.feed-item {
+  grid-row-end: auto;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 1024px) {
+  .outer-box {
+    flex-direction: column;
+  }
+
+  .analytics-container {
+    max-width: 100%;
+  }
+
+  .feed-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .feed-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .category-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ANALYTICS CONTAINER */
+.analytics-container {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* SEARCH BAR */
+.search-bar {
+  padding: 10px;
+  width: 50px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #43d2d2;
+  box-shadow: 0px 0px 5px rgba(67, 210, 210, 0.5);
+}
+
+/* CLEAR SEARCH BUTTON */
+.clear-search {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  margin-left: -30px;
+  position: relative;
+}
+
+.clear-search:hover {
+  color: #333;
+}
+
+/* FEED HEADER (Aligning Feed Title & Search Bar Inline) */
+.feed-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .feed-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+}
+
+/* FULLSCREEN OVERLAY */
+.fullscreen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure it's above everything */
+}
+
+.fullscreen-image {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px; /* ✅ Added for a smoother look */
+  object-fit: contain; /* ✅ Ensures proper scaling */
+}
+/* READ MORE CONTAINER */
+.read-more-container {
+  position: relative;
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* CONTENT - Initially truncated */
+.read-more-content {
+  max-height: 100px; /* Set the height to show only a few lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: max-height 0.3s ease-in-out;
+}
+
+/* EXPANDED CONTENT */
+.read-more-content.expanded {
+  max-height: 1000px; /* Large height to show full content */
+  white-space: normal;
+}
+
+.read-more-button {
+  display: inline-block;
+  margin-top: 10px;
+  color: #2980b9; /* Blue link color */
+  background: none; /* No background */
+  border: none; /* No border */
+  font-size: 14px; /* Font size */
+  text-align: left; /* Align text */
+  cursor: pointer; /* Pointer cursor */
+  padding: 0; /* Remove padding */
+  text-decoration: underline; /* Add underline for link look */
+}
+
+.read-more-button:hover {
+  color: #1a5a99; /* Darker blue on hover */
+  text-decoration: none; /* Remove underline on hover */
+}
+
+
+.post-description {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 3rem; /* Adjust based on design for collapsed view */
+}
+
+.post-description.expanded {
+  max-height: none; /* Remove height limitation for expanded view */
+  overflow: visible; /* Allow full content to show */
+}
+
+/* Video Styling Inside Feed */
+.feed-item video {
+  width: 100%;
+  height: 200px; /* Matches the height of the images */
+  border-radius: 10px; /* Same rounded corners as images */
+  object-fit: cover; /* Ensures the video scales properly within the frame */
+}

@@ -1,0 +1,215 @@
+/* OUTER BOX */
+.outer-box {
+    margin: 50px auto;
+    padding: 30px;
+    max-width: 1200px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ddd;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+/* LEFT SIDE CONTAINER (Dashboard & Feed) */
+.left-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* DASHBOARD SECTION */
+.dashboard-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* CATEGORY CONTAINER */
+.category-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  /* CATEGORY WRAPPER */
+  .category-wrapper {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+  
+  /* CATEGORY ICON */
+  .category-icon img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid #2980b9;
+    border-radius: 50%;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .category-icon:hover img {
+    transform: scale(1.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* SUBCATEGORY BOX */
+  .sub-category-container {
+    position: relative;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    min-width: 180px;
+    text-align: center;
+    border: 1px solid #ddd;
+    display: none;
+    margin-top: 10px;
+  }
+  
+  /* Show subcategory on hover */
+  .category-wrapper:hover .sub-category-container {
+    display: block;
+  }
+  
+  .category-wrapper:hover ~ .dashboard-section {
+    min-height: 350px;
+  }
+  
+  /* SUBCATEGORY LIST */
+  .sub-category-container ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .sub-category-container li {
+    padding: 8px 12px;
+    background: #f4f4f4;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    white-space: nowrap;
+  }
+  
+  .sub-category-container li:hover {
+    background: #e0e0e0;
+  }
+  
+  .subcategory-link {
+    text-decoration: none;
+    color: #2980b9;
+    font-weight: bold;
+    display: block;
+  }
+  
+  .subcategory-link:hover {
+    text-decoration: underline;
+  }
+
+/* FEED SECTION */
+.feed-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
+
+.feed-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* FEED GRID */
+.feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.feed-item {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.feed-item:hover {
+    transform: scale(1.05);
+}
+
+.feed-content h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.feed-content p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.post-link {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    color: #3498db;
+}
+
+.post-link:hover {
+    text-decoration: underline;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 1024px) {
+    .outer-box {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .feed-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .category-container {
+        gap: 15px;
+    }
+
+    .feed-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sub-category-container {
+        width: 100%;
+    }
+}
