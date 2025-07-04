@@ -4,7 +4,7 @@ import axiosInstance from "./api/axiosfetch";
 import "./CoordinatorProfile.css";
 
 const CoordinatorProfile = () => {
-  const defaultProfileImage = "/images/profile-image.jpg"; // Ensure this image exists in the 'public' folder
+  const defaultProfileImage = "/images/profile-image.jpg";
   const [profile, setProfile] = useState({
     name: "N/A",
     email: "N/A",
@@ -38,7 +38,6 @@ const CoordinatorProfile = () => {
           affiliation: response.data.affiliation || "N/A",
         });
 
-        // Use fetched image or fallback to default
         setProfileImage(response.data.image || defaultProfileImage);
       } catch (err) {
         console.error("❌ Error fetching profile data:", err);
@@ -48,11 +47,26 @@ const CoordinatorProfile = () => {
     fetchProfileData();
   }, [userEmail]);
 
+  const updateImageInBackend = async (imageData) => {
+    try {
+      const response = await axiosInstance.put(`/coordinatorinfo/${userEmail}/update-image`,
+        { image: imageData }
+      );
+      console.log("✅ Image updated successfully in DB:", response.data);
+    } catch (error) {
+      console.error("❌ Error updating image in DB:", error);
+    }
+  };
+
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => setProfileImage(reader.result);
+      reader.onload = async () => {
+        const imageData = reader.result;
+        setProfileImage(imageData);
+        await updateImageInBackend(imageData);
+      };
       reader.readAsDataURL(file);
     }
     setShowOptions(false);
@@ -64,7 +78,6 @@ const CoordinatorProfile = () => {
       const video = document.createElement("video");
       video.srcObject = stream;
       video.play();
-
       await new Promise((resolve) => (video.onloadedmetadata = resolve));
 
       const canvas = document.createElement("canvas");
@@ -73,15 +86,19 @@ const CoordinatorProfile = () => {
       canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
 
       stream.getTracks().forEach((track) => track.stop());
-      setProfileImage(canvas.toDataURL());
+
+      const capturedImage = canvas.toDataURL();
+      setProfileImage(capturedImage);
+      await updateImageInBackend(capturedImage);
     } catch (error) {
       console.error("❌ Error accessing the webcam:", error);
     }
     setShowOptions(false);
   };
 
-  const handleDeleteImage = () => {
+  const handleDeleteImage = async () => {
     setProfileImage(defaultProfileImage);
+    await updateImageInBackend(""); // Clear image in DB
     setShowOptions(false);
   };
 

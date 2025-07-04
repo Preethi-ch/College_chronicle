@@ -12,14 +12,11 @@ const StudentProfile = () => {
   });
 
   const [profileImage, setProfileImage] = useState("/images/profile-image.jpg");
-
-
   const [showOptions, setShowOptions] = useState(false);
-  const userEmail = localStorage.getItem("userEmail"); // ✅ `Just use localStorage directly
- // ✅ Now using useState
+  const userEmail = localStorage.getItem("userEmail");
 
   useEffect(() => {
-    console.log("Retrieved userEmail from localStorage:", userEmail); // ✅ Debugging log
+    console.log("Retrieved userEmail from localStorage:", userEmail);
 
     if (!userEmail) {
       console.error("❌ No user email found in localStorage. Please log in.");
@@ -46,7 +43,7 @@ const StudentProfile = () => {
         });
 
         if (data.image) {
-          setProfileImage(data.image); // Assuming image is stored as a base64 string
+          setProfileImage(data.image);
         }
       } catch (err) {
         console.error("❌ Error fetching profile data:", err);
@@ -54,14 +51,27 @@ const StudentProfile = () => {
     };
 
     fetchProfileData();
-  }, [userEmail]); // ✅ Now updates dynamically
+  }, [userEmail]);
+
+  const updateImageInBackend = async (imageData) => {
+    try {
+      const response = await axiosInstance.put(`/studentinfo/${userEmail}/update-image`, {
+        image: imageData,
+      });
+      console.log("✅ Image updated successfully in DB:", response.data);
+    } catch (error) {
+      console.error("❌ Error updating image in DB:", error);
+    }
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
-        setProfileImage(reader.result);
+      reader.onload = async () => {
+        const imageData = reader.result;
+        setProfileImage(imageData);
+        await updateImageInBackend(imageData);
       };
       reader.readAsDataURL(file);
     }
@@ -74,7 +84,6 @@ const StudentProfile = () => {
       const video = document.createElement("video");
       video.srcObject = stream;
       video.play();
-
       await new Promise((resolve) => (video.onloadedmetadata = resolve));
 
       const canvas = document.createElement("canvas");
@@ -84,15 +93,20 @@ const StudentProfile = () => {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
       stream.getTracks().forEach((track) => track.stop());
-      setProfileImage(canvas.toDataURL());
+
+      const capturedImage = canvas.toDataURL();
+      setProfileImage(capturedImage);
+      await updateImageInBackend(capturedImage);
     } catch (error) {
       console.error("❌ Error accessing the webcam:", error);
     }
     setShowOptions(false);
   };
 
-  const handleDeleteImage = () => {
-    setProfileImage("/images/profile-image.jpg");
+  const handleDeleteImage = async () => {
+    const defaultImage = "/images/profile-image.jpg";
+    setProfileImage(defaultImage);
+    await updateImageInBackend(""); // Clear image in DB
     setShowOptions(false);
   };
 

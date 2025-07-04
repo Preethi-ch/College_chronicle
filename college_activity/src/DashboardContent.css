@@ -187,13 +187,13 @@
 
 .filter-dropdown button {
   padding: 10px;
-  background: rgb(249, 248, 248);
+  background: white;
   border: none;
   cursor: pointer;
   text-align: left;
   width: 100%;
   font-size: 14px;
-  color:black;
+  color: black;
 }
 
 .filter-dropdown button:hover {
@@ -214,7 +214,7 @@
   padding: 10px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease-in-out;
-  overflow: hidden;
+  overflow: visible; /* ✅ CHANGED from hidden to visible */
   display: flex;
   flex-direction: column;
 }
@@ -310,7 +310,6 @@
   color: #333;
 }
 
-/* FEED HEADER (Aligning Feed Title & Search Bar Inline) */
 .feed-header {
   display: flex;
   align-items: center;
@@ -341,15 +340,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000; /* Ensure it's above everything */
+  z-index: 1000;
 }
 
 .fullscreen-image {
   max-width: 90%;
   max-height: 90%;
-  border-radius: 10px; /* ✅ Added for a smoother look */
-  object-fit: contain; /* ✅ Ensures proper scaling */
+  border-radius: 10px;
+  object-fit: contain;
 }
+
 /* READ MORE CONTAINER */
 .read-more-container {
   position: relative;
@@ -359,56 +359,214 @@
 
 /* CONTENT - Initially truncated */
 .read-more-content {
-  max-height: 100px; /* Set the height to show only a few lines */
+  max-height: 100px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: max-height 0.3s ease-in-out;
 }
 
-/* EXPANDED CONTENT */
 .read-more-content.expanded {
-  max-height: 1000px; /* Large height to show full content */
+  max-height: 1000px;
   white-space: normal;
 }
 
 .read-more-button {
   display: inline-block;
-  margin-top: 10px;
-  color: #2980b9; /* Blue link color */
-  background: none; /* No background */
-  border: none; /* No border */
-  font-size: 14px; /* Font size */
-  text-align: left; /* Align text */
-  cursor: pointer; /* Pointer cursor */
-  padding: 0; /* Remove padding */
-  text-decoration: underline; /* Add underline for link look */
+  margin-top: 8px; /* ✅ Added for spacing */
+  color: #2980b9;
+  background: none;
+  border: none;
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  z-index: 2; /* ✅ Added to ensure it's clickable */
 }
 
 .read-more-button:hover {
-  color: #1a5a99; /* Darker blue on hover */
-  text-decoration: none; /* Remove underline on hover */
+  color: #1a5a99;
+  text-decoration: none;
 }
 
-
 .post-description {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  white-space: pre-wrap;
+  max-height: 3rem;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-height: 3rem; /* Adjust based on design for collapsed view */
+  white-space: normal;
+  line-height: 1.5rem;
 }
 
 .post-description.expanded {
-  max-height: none; /* Remove height limitation for expanded view */
-  overflow: visible; /* Allow full content to show */
+  max-height: none;
+  overflow: visible;
 }
 
-/* Video Styling Inside Feed */
-.feed-item video {
+.feed-content.expanded {
+  max-height: none;
+  overflow: visible; /* ✅ Added to ensure full visibility */
+}
+
+/* CALENDAR styles */
+.analytics-container {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
   width: 100%;
-  height: 200px; /* Matches the height of the images */
-  border-radius: 10px; /* Same rounded corners as images */
-  object-fit: cover; /* Ensures the video scales properly within the frame */
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.react-calendar {
+  width: 100%;
+  border: none;
+  font-family: 'Arial', sans-serif;
+  line-height: 1.5;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.react-calendar__navigation {
+  background-color: #d86ecb;
+  color: white;
+  font-weight: bold;
+}
+
+.react-calendar__navigation button {
+  color: white;
+  font-size: 1.1rem;
+  background: none;
+  border: none;
+  padding: 10px;
+}
+
+.react-calendar__navigation button:disabled {
+  opacity: 0.5;
+}
+
+.react-calendar_month-view_weekdays {
+  background-color: #f7f3f3;
+  text-align: center;
+  font-weight: bold;
+  padding: 5px 0;
+}
+
+.react-calendar_month-viewweekdays_weekday {
+  text-align: center;
+  color: #333;
+}
+
+.react-calendar__tile {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.react-calendar__tile--now {
+  background: #ffe0f0;
+  border-radius: 50%;
+}
+
+.react-calendar__tile--active {
+  background: #d86ecb !important;
+  color: white !important;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(216, 110, 203, 0.4);
+  border-radius: 50%;
+}
+
+.react-calendar__tile:enabled:hover {
+  background: #f3a7dd;
+  border-radius: 50%;
+}
+
+/* Marker for event days */
+.calendar-marker {
+  font-size: 1.2rem;
+  text-align: center;
+  color: #d86ecb;
+}
+
+/* Selected day events list */
+.selected-day-events {
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+}
+
+.selected-day-events h3 {
+  font-size: 1.1rem;
+  color: #d86ecb;
+  margin-bottom: 10px;
+}
+
+.selected-day-events .event-detail {
+  background-color: #fafafa;
+  border: 1px solid #eee;
+  border-left: 5px solid #d86ecb;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+.react-calendar__tile {
+  color: #000;
+  background-color: white;
+}
+
+.react-calendar__tile--active {
+  background: #d86ecb !important;
+  color: white !important;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.react-calendar__tile--now {
+  background: #ffe0f0;
+  color: #000 !important;
+  border-radius: 50%;
+}
+
+.react-calendar_tile--now.react-calendar_tile--active {
+  background: #c850b6 !important;
+  color: #fff !important;
+}
+
+/* Make actual Sundays (not every 7th cell) red */
+.sunday-tile {
+  color: red !important;
+}
+/* FULLSCREEN OVERLAY */
+.fullscreen-overlay-postpage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.fullscreen-image-postpage {
+  max-width: 90%;
+  max-height: 90%;
+  border-radius: 10px;
+}
+
+.close-button-postpage {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+  background: none;
+  border: none;
 }

@@ -5,7 +5,7 @@ const coordinatorSchema = new mongoose.Schema({
   password: { type: String, required: true },
   name: { type: String, required: true },
   affiliation: { type: String, required: true },
-  image: { type: Buffer },  // Store the image as a binary buffer
+  image: { type: String },  // Store the image as a binary buffer
 });
 
 module.exports = mongoose.model("Coordinator", coordinatorSchema);

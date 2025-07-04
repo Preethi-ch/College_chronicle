@@ -1,38 +1,37 @@
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const multer = require("multer");
+const path = require("path");
 
 // Configure Cloudinary
 cloudinary.config({
-  cloud_name: 'dgx5gdx7k',  // Set in .env
-  api_key: '551457272212954', // Set in .env
+  cloud_name: 'dgx5gdx7k',
+  api_key: '551457272212954',
   api_secret: 'CsYSTVQfoTNvnUTzWMDTzCSdpac',
 });
 
-// Log Cloudinary configuration to confirm it's correctly loaded
-console.log("Cloudinary configured with cloud name:", cloudinary.config().cloud_name);
+// Determine resource type for Cloudinary
+const determineResourceType = (file) => {
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (ext === ".pdf") return "raw";
+  if (ext === ".mp4") return "video";
+  return "image";
+};
 
-// Multer Storage for Cloudinary
+// Setup storage
 const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: "college-blog", // Folder in Cloudinary
-    resource_type: "auto",  // Automatically detects file type
+  cloudinary,
+  params: async (req, file) => {
+    const resourceType = determineResourceType(file);
+    return {
+      folder: "college-blog",
+      resource_type: resourceType,
+      public_id: path.parse(file.originalname).name,
+    };
   },
 });
 
-
-
-
-// Log storage configuration to confirm setup
-console.log("Multer Cloudinary storage configured with folder:", storage.params.folder);
-
-// Initialize multer with Cloudinary storage
+// Export upload middleware
 const upload = multer({ storage });
 
-// Log multer setup confirmation
-console.log("Multer upload initialized with Cloudinary storage.");
-
-// Export the Cloudinary instance and upload middleware for use in routes
 module.exports = { cloudinary, upload };
-
