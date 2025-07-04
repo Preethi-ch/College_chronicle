@@ -10,7 +10,7 @@ const stuprofileRoutes = require("./routes/studentinfo");
 const postviewRoutes = require("./routes/postview");
 const corprofileRoutes = require("./routes/coordinatorinfo");
 const draftviewRoutes = require("./routes/draftsview");
-const subcategoriesfetchRoutes = require("./routes/subcategoriesfetch");
+
 
 dotenv.config(); // Load environment variables
 
@@ -43,7 +43,7 @@ app.use("/studentinfo", stuprofileRoutes);
 app.use("/postview",postviewRoutes);
 app.use("/coordinatorinfo",corprofileRoutes);
 app.use("/draftsview",draftviewRoutes);
-app.use("/subcategoriesfetch",subcategoriesfetchRoutes);
+
 // Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -24,9 +24,7 @@ router.get("/auth/google", (req, res) => {
     access_type: "offline",
     prompt: "consent",
     scope: [
-       "https://www.googleapis.com/auth/calendar.events",
-  "https://www.googleapis.com/auth/calendar",
-  "https://www.googleapis.com/auth/userinfo.email"
+       'use your scope'
     ],
   });
   res.redirect(url);
