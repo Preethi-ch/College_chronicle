@@ -20,7 +20,7 @@ Implements a secure email/password-based login system with access restrictions a
 
 | Layer              | Technologies Used                            |
 |--------------------|-----------------------------------------------|
-| Frontend           | React.js, HTML5, CSS3, JavaScript             |
+| Frontend           | React.js            |
 | Backend            | Node.js, Express.js                           |
 | Database           | MongoDB with Mongoose ODM                     |
 | Authentication     | Custom email/password logic                   |
